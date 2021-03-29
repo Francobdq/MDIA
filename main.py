@@ -5,7 +5,7 @@ from flask import Flask, flash, request, redirect, url_for, send_from_directory,
 from werkzeug.utils import secure_filename
 
 from werkzeug.middleware.shared_data import SharedDataMiddleware
-
+#
 UPLOAD_FOLDER = ''
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif','xlsx'}
 
