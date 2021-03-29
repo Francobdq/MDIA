@@ -45,7 +45,7 @@ def excelALista(pathDATOS):
 
     # lee el excel y separa las columnas con las que se trabajará
     try:
-        df = pd.read_excel(excel, 'Hoja1')
+        df = pd.read_excel(excel)
     except:
         error = "El archivo " + excel + " no existe."
         print(error)
@@ -119,7 +119,7 @@ def ejecutarCodigo(pathTXT, pathDATOS):
     for j in range(cantLineas):
         linea = f.readline()
         iAnterior = 0
-        for i in lista:
+        for i in range(len(lista)):
             f2.write(linea[iAnterior:i] + ";")
             iAnterior = i
         f2.write(linea[iAnterior:-1])
@@ -135,4 +135,4 @@ def ejecutarCodigo(pathTXT, pathDATOS):
 
 
 
-
+#ejecutarCodigo(os.getcwd() + "\\"+ "Deuda009.txt", os.getcwd() + "\\"+ "datos_de_deuda.xlsx")
