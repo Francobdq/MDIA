@@ -1,2 +1,2 @@
 # MDIA
-Se encarga de crear un excel apartir de un txt.
+Se crea un excel apartir de .txt dandole formato 
