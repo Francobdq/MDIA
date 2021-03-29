@@ -1,12 +1,13 @@
 import os
 import logging
-from flask import Flask, flash, request, redirect, url_for, send_from_directory
+import probarImportar
+from flask import Flask, flash, request, redirect, url_for, send_from_directory, render_template
 from werkzeug.utils import secure_filename
 
 from werkzeug.middleware.shared_data import SharedDataMiddleware
 
 UPLOAD_FOLDER = ''
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif','xlsx'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -36,28 +37,42 @@ def upload_file():
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
+        
+        if 'excel' not in request.files:
+            flash('No file apart')
+            return redirect(request.url)
+        
+
+
         file = request.files['file']
+        excel = request.files['excel']
         # if user does not select file, browser also
         # submit an empty part without filename
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(path)
-            manejoDeArchivo(path)
-            return redirect(url_for('uploaded_file',
-                                    filename=filename))
-    return '''
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-    '''
+            filenameTXT = secure_filename(file.filename)
+            pathTXT = os.path.join(app.config['UPLOAD_FOLDER'], filenameTXT)
+            file.save(pathTXT)
+            #manejoDeArchivo(pathTXT)
+            
+            if excel.filename == '':
+                flash('No selected file')
+                return redirect(request.url)
+            if excel and allowed_file(excel.filename):
+                filenameXLSX = secure_filename(excel.filename)
+                pathXLSX = os.path.join(app.config['UPLOAD_FOLDER'], filenameXLSX)
+                excel.save(pathXLSX)
+
+                probarImportar.ejecutarCodigo(pathTXT, pathXLSX)
+                nombreOUT = 'output.xlsx'
+                return redirect(url_for('uploaded_file',
+                                        filename=nombreOUT))
+
+
+
+    return render_template("index.html")
 
 
 
