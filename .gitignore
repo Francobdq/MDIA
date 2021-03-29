@@ -2,5 +2,7 @@
 /.vscode
 /venv
 /interfazVieja.pyw
-/test.txt
-/test.xlsx
+/datos_de_deuda.xlsx
+/Deuda009.txt
+/output.xlsx
+/data
