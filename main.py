@@ -7,7 +7,6 @@ from werkzeug.utils import secure_filename
 from werkzeug.middleware.shared_data import SharedDataMiddleware
 #
 UPLOAD_FOLDER = ''
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif','xlsx'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -17,7 +16,9 @@ logging.basicConfig(level=logging.DEBUG)
 logging.debug("Log habilitad!")
 
 
-def allowed_file(filename):
+def allowed_file(filename, tipo):
+    ALLOWED_EXTENSIONS = {tipo}
+
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -51,8 +52,8 @@ def upload_file():
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filenameTXT = secure_filename(file.filename)
+        if file and allowed_file(file.filename, "txt"):
+            filenameTXT = "Deuda.txt"
             pathTXT = os.path.join(app.config['UPLOAD_FOLDER'], filenameTXT)
             file.save(pathTXT)
             #manejoDeArchivo(pathTXT)
@@ -60,8 +61,8 @@ def upload_file():
             if excel.filename == '':
                 flash('No selected file')
                 return redirect(request.url)
-            if excel and allowed_file(excel.filename):
-                filenameXLSX = secure_filename(excel.filename)
+            if excel and allowed_file(excel.filename, "xlsx"):
+                filenameXLSX = "datos_de_deuda.xlsx"
                 pathXLSX = os.path.join(app.config['UPLOAD_FOLDER'], filenameXLSX)
                 excel.save(pathXLSX)
 
