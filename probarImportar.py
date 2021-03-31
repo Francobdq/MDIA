@@ -40,20 +40,20 @@ def exportarExcel(pathTXT, pathOUT):
 
 
 # Convierte el excel de datos a una lista para poder trabajarlo dentro del programa
-def excelALista(pathDATOS):
+def excelALista(pathDATOS, nombreHojaExcel, numFila, numCol):
     excel = pathDATOS
 
     # lee el excel y separa las columnas con las que se trabajará
     try:
-        df = pd.read_excel(excel)
+        df = pd.read_excel(excel, nombreHojaExcel)
     except:
         error = "El archivo " + excel + " no existe."
         print(error)
         agregarErrores(error)
         exit()
 
-    df_primerColumna = df.iloc[:,1]
-    df_segundaColumna = df.iloc[:,2]
+    df_primerColumna = df.iloc[numFila[0]:,numCol[1]]
+    df_segundaColumna = df.iloc[numFila[1]:,numCol[1]]
 
     #convierte las columnas de dataframe a listas 
     primeraColumna = df_primerColumna.values.tolist()
@@ -87,7 +87,7 @@ def agregarErrores(lineaDeError):
 
 
 
-def ejecutarCodigo(pathTXT, pathDATOS):
+def ejecutarCodigo(pathTXT, pathDATOS, nombreHojaExcel, numFila, numCol):
     print("ejecutando")
 
     # abre los archivos de texto
@@ -102,7 +102,7 @@ def ejecutarCodigo(pathTXT, pathDATOS):
         exit()
 
     # Obtiene la lista ya convertida
-    lista = excelALista(pathDATOS)
+    lista = excelALista(pathDATOS, nombreHojaExcel, numFila, numCol)
 
     # En la primer linea coloca ";" con espacios vacios (para que la primer linea del txt no sean titulos dentro del excel)
     for j in range(len(lista)+2):

@@ -28,7 +28,34 @@ def manejoDeArchivo(archivo):
     f.seek(0)
     logging.debug(f.readline())
 
+#Convierte una cadena de caracteres (los nombres de columnas excel) a su valor numerico
+def cadenaANum(cadena):
+    listNum = []
 
+    # recorro la cadena
+    for i in cadena:
+        # paso acada caracter a mayuscula y obtengo su ascii
+        test = i.upper()
+        ascci = ord(test)
+
+        if(ascci < 65 or ascci > 90):
+            print("Numero fuera de rango")
+            return
+        # del ascci lo paso a su valor numerico    
+        num = ascci - 65 + 1
+        # y lo añado a una lista
+        listNum.append(num)
+
+    # Luego paso esta lista (que se encuentra en base 26) a base 10
+    suma = 0
+    mul = pow(26,len(listNum)-1)
+    for i in listNum:
+
+        suma += i * mul
+        mul /= 26
+
+    # y finalmente devuelvo el valor final
+    return suma - 1
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -66,7 +93,15 @@ def upload_file():
                 pathXLSX = os.path.join(app.config['UPLOAD_FOLDER'], filenameXLSX)
                 excel.save(pathXLSX)
 
-                probarImportar.ejecutarCodigo(pathTXT, pathXLSX)
+                numFila = [int(request.form['num-fila-num']),int(request.form['num-fila-dig'])]
+                numCol = [cadenaANum(request.form['num-col-num']), cadenaANum(request.form['num-col-dig'])]
+                nombreHojaExcel = request.form['nomb-hoja']
+                logging.debug("---------ATR-----------")
+                logging.debug(nombreHojaExcel)
+                logging.debug(numFila)
+                logging.debug(numCol)
+
+                probarImportar.ejecutarCodigo(pathTXT, pathXLSX, nombreHojaExcel, numFila, numCol)
                 nombreOUT = 'output.xlsx'
                 return redirect(url_for('uploaded_file',
                                         filename=nombreOUT))
