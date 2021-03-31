@@ -2,14 +2,11 @@
 <hmtl lang ="es">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-        
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link href="{{ url_for('static',filename='styles/styles.css') }}" rel="stylesheet" type="text/css">
     </head>
-    
     <body>
         <section class="container">            
             <form method=post enctype=multipart/form-data>
@@ -18,17 +15,36 @@
                     <h1 class="text-center" tabindex="0">Migración a Excel de Impuesto Automotor</h1>
                 </header>
                 <hr />
+
                 <!-- Inicio Encuesta -->
                 <section class="seccion-container" data-aos="fade-right" data-aos-duration="750" data-aos-easing="ease-in-out">
                     <h3>Seleccione el archivo .txt</h3>
                     <!-- <label id="label-edad" for="input-edad">Seleccione el archivo .txt</label> -->
                     <input id="input-edad" class="form-control-file" type=file name=file required/>
+                    
                 </section>
                 <hr/>
                 <section class="seccion-container" data-aos="fade-right" data-aos-duration="750" data-aos-easing="ease-in-out">
                     <h3>Seleccione el archivo .xlsx</h3>
-                    <!-- <label id="label-edad" for="input-edad">Seleccione el archivo .txt</label> -->
+
+                    <label id="label-seleccione-xlsx">Ingrese:</label>
+                    <br/>
+                    <input id = "nomb-hoja" type="text" required placeholder="Nombre de la hoja">
+                    <br/>
+                    <br/>
+                    <label>De los numeros:</label> <br/>
+                    <input class = "num-fila"  type="number" required placeholder="Número fila (inicial)">
+                    <input class = "num-col"   type="text" maxlength="3" required placeholder="Número columna">
+                    <br/>
+                    <br/>
+                    <label>De los digitos:</label><br/>
+                    <input class = "num-fila"  type="number" required placeholder="Número fila (inicial)">
+                    <input class = "num-col"   type="text" maxlength="3" required placeholder="Número columna">
+                    <br/>
+                    <br/>
                     <input id="input-edad" class="form-control-file" type=file name=excel required/>
+
+                    
                 </section>
                 <hr/>
                 <section>

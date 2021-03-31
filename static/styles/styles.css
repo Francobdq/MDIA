@@ -39,9 +39,20 @@ h3 {
     color: var(--color-texto)
 }
 
+
 p,label {
     color:var(--color-texto)
 }
+
+.ayuda{
+    border-radius: 10px;
+}
+
+.ayuda:hover{
+    border-radius: 0px;
+}
+
+
 
 .form-control {
     transition: ease 0.1s;
@@ -74,6 +85,7 @@ h1:focus {
     outline: none;
     text-decoration: underline;
 }
+
 
 #input-edad {
     color: var(--color-texto);
