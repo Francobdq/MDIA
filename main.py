@@ -16,8 +16,7 @@ logging.basicConfig(level=logging.DEBUG)
 logging.debug("Log habilitad!")
 
 
-def allowed_file(filename, tipo):
-    ALLOWED_EXTENSIONS = {tipo}
+def allowed_file(filename, ALLOWED_EXTENSIONS):
 
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -79,7 +78,7 @@ def upload_file():
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
-        if file and allowed_file(file.filename, "txt"):
+        if file and allowed_file(file.filename, {"txt"}):
             filenameTXT = "Deuda.txt"
             pathTXT = os.path.join(app.config['UPLOAD_FOLDER'], filenameTXT)
             file.save(pathTXT)
@@ -88,12 +87,12 @@ def upload_file():
             if excel.filename == '':
                 flash('No selected file')
                 return redirect(request.url)
-            if excel and allowed_file(excel.filename, "xlsx"):
+            if excel and allowed_file(excel.filename, {"xlsx","xls"}):
                 filenameXLSX = "datos_de_deuda.xlsx"
                 pathXLSX = os.path.join(app.config['UPLOAD_FOLDER'], filenameXLSX)
                 excel.save(pathXLSX)
 
-                numFila = [int(request.form['num-fila-num']),int(request.form['num-fila-dig'])]
+                numFila = [int(request.form['num-fila-num'])-2,int(request.form['num-fila-dig'])-2]
                 numCol = [cadenaANum(request.form['num-col-num']), cadenaANum(request.form['num-col-dig'])]
                 nombreHojaExcel = request.form['nomb-hoja']
                 logging.debug("---------ATR-----------")
