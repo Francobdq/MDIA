@@ -52,12 +52,13 @@ def excelALista(pathDATOS, nombreHojaExcel, numFila, numCol):
         agregarErrores(error)
         exit()
 
-    df_primerColumna = df.iloc[numFila[0]:,numCol[1]]
-    df_segundaColumna = df.iloc[numFila[1]:,numCol[1]]
+    df_primerColumna  = df.iloc[numFila[0]:,numCol[0]]
+    df_segundaColumna = df.iloc[numFila[1]:,numCol[1]] 
 
     #convierte las columnas de dataframe a listas 
     primeraColumna = df_primerColumna.values.tolist()
     segundaColumna = df_segundaColumna.values.tolist()
+    
 
     # agrega los valores decimales que pide
     cont = 0
@@ -109,7 +110,6 @@ def ejecutarCodigo(pathTXT, pathDATOS, nombreHojaExcel, numFila, numCol):
         f2.write(" ;")
     f2.write("\n")
 
-
     # reinicia los punteros y obtiene la cantidad de lineas
     f.seek(0)
     cantLineas = len(f.readlines())
@@ -119,7 +119,8 @@ def ejecutarCodigo(pathTXT, pathDATOS, nombreHojaExcel, numFila, numCol):
     for j in range(cantLineas):
         linea = f.readline()
         iAnterior = 0
-        for i in range(len(lista)):
+        for i in lista:
+            i = int(i)
             f2.write(linea[iAnterior:i] + ";")
             iAnterior = i
         f2.write(linea[iAnterior:-1])
